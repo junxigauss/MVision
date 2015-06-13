@@ -3,10 +3,23 @@
 
 #include "mvSingleton.h"
 
+#include "opencv2/highgui/highgui.hpp"
+
 namespace mv {
-class Capture : public Singleton<Capture> {
+class DataBase;
+
+class Capture {
 public:
+    Capture(DataBase *pDataBase, int device);
+
+    bool IsOpen() const;
+
+    DataBase* GetFrame();
+
 private:
+    DataBase *m_pDataBase;
+    bool m_IsCapOK;
+    cv::VideoCapture m_Cap;
 };
 }
 

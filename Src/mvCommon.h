@@ -2,8 +2,8 @@
 #define MVCOMMON_H
 
 namespace mv {
-#ifndef INTERFACE
-#define INTERFACE struct
+#ifndef interface
+#define interface class
 #endif
 
 class Util {

@@ -4,6 +4,7 @@
 #include <memory>
 #include <mutex>
 
+namespace mv {
 template<typename T>
 class Singleton
 {
@@ -13,29 +14,30 @@ private:
     static std::mutex m_lock;
 
 public:
-	virtual ~Singleton(){}
+    virtual ~Singleton(){}
 
     template<typename ..._Args>
     static pointer GetInstance(_Args...args) {
-		if (nullptr == m_singleton.get()) {
+        if (nullptr == m_singleton.get()) {
             m_lock.lock();
             if (nullptr == m_singleton.get()) {
                 m_singleton.reset(new T(args...));
             }
             m_lock.unlock();
-		}
-		return m_singleton.get();
-	}
+        }
+        return m_singleton.get();
+    }
 
 protected:
     Singleton(){}
-    Singleton(const Singleton&);
-    Singleton& operator = (const Singleton&);
+    Singleton(const Singleton&) = delete;
+    Singleton& operator = (const Singleton&) = delete;
 };
 
 template<typename T>
 std::unique_ptr<T> Singleton<T>::m_singleton;
 template<typename T>
 std::mutex Singleton<T>::m_lock;
+}
 
 #endif
